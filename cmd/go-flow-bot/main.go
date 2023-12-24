@@ -1,6 +1,7 @@
 package main
 
 import (
+	"go-flow-bot/internal/http-server/handlers"
 	"log/slog"
 	"net/http"
 
@@ -24,14 +25,10 @@ func main() {
 	r.Use(middleware.Logger)
 
 	/* ROUTES */
-	r.Get("/", pingHandler)
+	r.Get("/", handlers.PingHandler)
 
 	/* START SERVER */
 	if err := http.ListenAndServe(cfg.HTTPServer.Address, r); err != nil {
 		slog.Error("failed to start server")
 	}
-}
-
-func pingHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("welcome"))
 }
